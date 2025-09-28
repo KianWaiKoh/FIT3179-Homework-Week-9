@@ -1,6 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Dengue Disease by States in Malaysia (2019)",
+  "title": {
+    "text": "Dengue Disease by States in Malaysia (2019)",
+    "fontSize": 16,
+    "subtitle": "Note: Kuala Lumpur and Putrajaya share the same data values",
+    "subtitleFontSize": 11,
+    "subtitleFontStyle": "italic",
+    "subtitleColor": "gray"
+  },
   "width": 800,
   "height": 400,
   "projection": { "type": "equirectangular" },
@@ -13,7 +20,11 @@
   },
   "transform": [
     {
-      "lookup": "properties.name",
+      "calculate": "datum.properties.name == 'Putrajaya' ? 'Kuala Lumpur' : datum.properties.name",
+      "as": "normalized_name"
+    },
+    {
+      "lookup": "normalized_name",
       "from": {
         "data": {
           "url": "Dengue_Malaysia.csv"
